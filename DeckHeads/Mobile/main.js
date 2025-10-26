@@ -138,7 +138,7 @@ document.addEventListener('touchstart', (e) => {
     });
     document.body.appendChild(selbox.div);
   }
-});
+},{passive: false});
 
 document.addEventListener('touchmove', (e) => {
   e.preventDefault();
@@ -192,7 +192,7 @@ document.addEventListener('touchmove', (e) => {
   }
   touch.lastX = touch.x;
   touch.lastY = touch.y;
-});
+},{passive: false});
 
 document.addEventListener('touchend', () => {
   shuffling = false;
@@ -202,7 +202,7 @@ document.addEventListener('touchend', () => {
     selbox.active = false;
     selbox.div.remove();
   }
-});
+},{passive: false} );
 
 // RUNTIME
 [...Array(10)].forEach((_, i) => suits.forEach(suit => new Card(`${i + 1} ${suit}`)));
