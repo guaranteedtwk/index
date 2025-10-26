@@ -122,6 +122,7 @@ function init() {
 
 // EVENT LISTENERS
 document.addEventListener('touchstart', (e) => {
+  e.preventDefault();
   if (!touch.target) {
     deck.forEach(card => {
       card.selected = false;
@@ -140,6 +141,7 @@ document.addEventListener('touchstart', (e) => {
 });
 
 document.addEventListener('touchmove', (e) => {
+  e.preventDefault();
   touch.x = e.touches[0].clientX;
   touch.y = e.touches[0].clientY;
   
