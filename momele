@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+    <title>MOMELE</title>
+  </head>
+  <style>
+    body
+    {
+      background-color: white;
+      color: black;
+      font-family: monospace;
+      font-size: 15px;
+    }
+    
+    #grid
+    {
+      line-height: 20px;
+      letter-spacing: 10px;
+    }
+    
+    input
+    {
+      margin-bottom: 5px;
+      font-family: monospace;
+    }
+  </style>
+  <body>
+    <p>M O M E L E</p>
+    <input id="size" placeholder="taille de la grille">
+    <input id="words" placeholder="mot1,mot2,mot3..">
+    <br>
+    <button onclick='init()'>OK</button>
+    <br><br>
+    <div id="grid"></div>
+  </body>
+    <script>
+      let MAPSIZE = 10;
+      let map = Array.from(Array(MAPSIZE), () => new Array(MAPSIZE));
+      let grid = document.getElementById('grid');
+      let alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let words = [];
+      let occupied = [];
+      
+      function rand(min, max)
+      {
+        const minCeiled = Math.ceil(min);
+        const maxFloored = Math.floor(max);
+        return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
+      }
+      
+      function garbage()
+      {
+          for (let i=0; i < MAPSIZE; i++)
+          {
+              for (let j=0; j < MAPSIZE; j++)
+              {
+                  map[i][j] = alph[rand(0,25)];
+                  grid.innerHTML += map[i][j];
+              }
+              grid.innerHTML += '<br>';
+          }
+      }
+      
+      function draw()
+      {
+        grid.innerHTML = '';
+          for (let i=0; i < MAPSIZE; i++)
+          {
+              for (let j=0; j < MAPSIZE; j++)
+              {
+                  grid.innerHTML += map[i][j];
+              }
+              grid.innerHTML += '<br>';
+          }
+      }
+      
+      function addWords()
+      {
+        words.forEach(word =>
+        {
+          let placed = false;
+          let attempts = 0;
+      
+          while (!placed && attempts < 100)
+          {
+            attempts++;
+            let dir = rand(0, 1);
+            let rev = rand(0,1);
+            let end = MAPSIZE - word.length;
+            let start = rand(0, end);
+            let row = rand(0, MAPSIZE - 1);
+      
+            let canPlace = true;
+      
+            if (rev === 1)
+            {
+              word = word.split('').reverse().join('');
+            }
+      
+            if (dir === 0)
+            {
+              for (let i = 0; i < word.length; i++)
+              {
+                if (occupied.some(o => o.x === row && o.y === start + i))
+                {
+                  canPlace = false;
+                  break;
+                }
+              }
+      
+              if (canPlace)
+              {
+                for (let i = 0; i < word.length; i++)
+                {
+                  map[row][start + i] = word[i];
+                  occupied.push({ x: row, y: start + i });
+                }
+                placed = true;
+              }
+            }
+            else
+            {
+              for (let i = 0; i < word.length; i++)
+              {
+                if (occupied.some(o => o.x === start + i && o.y === row))
+                {
+                  canPlace = false;
+                  break;
+                }
+              }
+      
+              if (canPlace)
+              {
+                for (let i = 0; i < word.length; i++)
+                {
+                  map[start + i][row] = word[i];
+                  occupied.push({ x: start + i, y: row });
+                }
+                placed = true;
+              }
+            }
+          }
+      
+          if (!placed)
+          {
+            console.warn(`Couldn't place word: ${word}`);
+          }
+        });
+      }
+      
+      function init()
+      {
+          words = document.getElementById('words').value.toUpperCase();
+          words = words.split(',');
+          MAPSIZE = document.getElementById('size').value;
+      
+          garbage();
+          addWords();
+          draw();
+      }
+    </script>
+</html>
+        
