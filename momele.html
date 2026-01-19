@@ -50,31 +50,30 @@
         const maxFloored = Math.floor(max);
         return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
       }
-      
+            
       function garbage()
       {
-          for (let i=0; i < MAPSIZE; i++)
-          {
-              for (let j=0; j < MAPSIZE; j++)
-              {
-                  map[i][j] = alph[rand(0,25)];
-                  grid.innerHTML += map[i][j];
-              }
-              grid.innerHTML += '<br>';
+        let html = "";
+        for (let i = 0; i < MAPSIZE; i++) {
+          for (let j = 0; j < MAPSIZE; j++) {
+            map[i][j] = alph[rand(0, 25)];
+            html += map[i][j];
           }
+          html += "<br>";
+        }
+        grid.innerHTML = html;
       }
       
       function draw()
       {
-        grid.innerHTML = '';
-          for (let i=0; i < MAPSIZE; i++)
-          {
-              for (let j=0; j < MAPSIZE; j++)
-              {
-                  grid.innerHTML += map[i][j];
-              }
-              grid.innerHTML += '<br>';
+        let html = "";
+        for (let i = 0; i < MAPSIZE; i++) {
+          for (let j = 0; j < MAPSIZE; j++) {
+            html += map[i][j];
           }
+          html += "<br>";
+        }
+        grid.innerHTML = html;
       }
       
       function addWords()
