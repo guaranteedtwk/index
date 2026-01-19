@@ -37,8 +37,8 @@
     <div id="grid"></div>
   </body>
     <script>
-      let MAPSIZE = 10;
-      let map = Array.from(Array(MAPSIZE), () => new Array(MAPSIZE));
+      let MAPSIZE;
+      let map;
       let grid = document.getElementById('grid');
       let alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       let words = [];
@@ -156,6 +156,7 @@
           words = document.getElementById('words').value.toUpperCase();
           words = words.split(',');
           MAPSIZE = document.getElementById('size').value;
+          map = Array.from(Array(MAPSIZE), () => new Array(MAPSIZE));
       
           garbage();
           addWords();
