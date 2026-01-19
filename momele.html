@@ -153,9 +153,12 @@
       
       function init()
       {
+          grid.innerHTML = '';
+          words = '';
+          occupied = '';
           words = document.getElementById('words').value.toUpperCase();
           words = words.split(',');
-          MAPSIZE = document.getElementById('size').value;
+          MAPSIZE = parseInt(document.getElementById('size').value);
           map = Array.from(Array(MAPSIZE), () => new Array(MAPSIZE));
       
           garbage();
